@@ -1,0 +1,534 @@
+/* ============================================
+   VULTSOUND - Estilos Base
+   Diseño minimalista inspirado en Apple/Jony Ive
+   ============================================ */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --black: #000000;
+    --white: #ffffff;
+    --gray-light: rgba(255, 255, 255, 0.6);
+    --gray-dark: rgba(255, 255, 255, 0.1);
+    --accent: rgba(255, 255, 255, 0.05);
+    --transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Inter', 'SF Pro Display', 'Segoe UI', sans-serif;
+    background: var(--black);
+    color: var(--white);
+    line-height: 1.6;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* ============================================
+   Canvas de partículas de fondo
+   ============================================ */
+
+#particleCanvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    opacity: 0.3;
+}
+
+/* ============================================
+   Contenedor principal
+   ============================================ */
+
+.container {
+    position: relative;
+    z-index: 1;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 60px 40px;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+/* ============================================
+   Header y Logo
+   ============================================ */
+
+.header {
+    text-align: center;
+    margin-bottom: 80px;
+    animation: fadeInDown 1s ease;
+}
+
+.logo {
+    font-size: 48px;
+    font-weight: 200;
+    letter-spacing: 8px;
+    background: linear-gradient(135deg, #ffffff 0%, #a0a0a0 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 12px;
+    text-transform: uppercase;
+}
+
+.tagline {
+    font-size: 14px;
+    font-weight: 300;
+    color: var(--gray-light);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+}
+
+/* ============================================
+   Sección de entrada
+   ============================================ */
+
+.input-section {
+    width: 100%;
+    animation: fadeInUp 1s ease 0.2s both;
+}
+
+.input-group {
+    margin-bottom: 40px;
+}
+
+.input-group label {
+    display: block;
+    font-size: 13px;
+    font-weight: 400;
+    color: var(--gray-light);
+    margin-bottom: 12px;
+    letter-spacing: 0.5px;
+}
+
+textarea {
+    width: 100%;
+    padding: 20px;
+    background: var(--accent);
+    border: 1px solid var(--gray-dark);
+    border-radius: 12px;
+    color: var(--white);
+    font-family: inherit;
+    font-size: 15px;
+    font-weight: 300;
+    resize: none;
+    transition: var(--transition);
+    outline: none;
+}
+
+textarea:focus {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(255, 255, 255, 0.2);
+}
+
+textarea::placeholder {
+    color: rgba(255, 255, 255, 0.3);
+}
+
+/* ============================================
+   Subida de archivo
+   ============================================ */
+
+.file-upload-wrapper {
+    margin-bottom: 12px;
+}
+
+.file-upload-btn {
+    width: 100%;
+    padding: 18px;
+    background: var(--accent);
+    border: 1px solid var(--gray-dark);
+    border-radius: 12px;
+    color: var(--gray-light);
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 300;
+    cursor: pointer;
+    transition: var(--transition);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+}
+
+.file-upload-btn:hover {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(255, 255, 255, 0.2);
+}
+
+.upload-icon {
+    font-size: 18px;
+}
+
+.audio-info {
+    font-size: 12px;
+    color: var(--gray-light);
+    padding-left: 4px;
+    min-height: 20px;
+}
+
+/* ============================================
+   Botón de generación
+   ============================================ */
+
+.generate-btn {
+    width: 100%;
+    padding: 22px;
+    background: var(--white);
+    border: none;
+    border-radius: 12px;
+    color: var(--black);
+    font-family: inherit;
+    font-size: 15px;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    cursor: pointer;
+    transition: var(--transition);
+    position: relative;
+    overflow: hidden;
+}
+
+.generate-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 40px rgba(255, 255, 255, 0.2);
+}
+
+.generate-btn:active {
+    transform: translateY(0);
+}
+
+.generate-btn.loading {
+    pointer-events: none;
+    opacity: 0.7;
+}
+
+.generate-btn.loading .btn-text {
+    opacity: 0;
+}
+
+.btn-loader {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 20px;
+    height: 20px;
+    border: 2px solid rgba(0, 0, 0, 0.1);
+    border-top-color: var(--black);
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+    opacity: 0;
+}
+
+.generate-btn.loading .btn-loader {
+    opacity: 1;
+}
+
+/* ============================================
+   Sección del reproductor
+   ============================================ */
+
+.player-section {
+    width: 100%;
+    animation: fadeInUp 0.8s ease;
+}
+
+.player-section.hidden {
+    display: none;
+}
+
+/* ============================================
+   Visualizador
+   ============================================ */
+
+.visualizer-wrapper {
+    position: relative;
+    width: 100%;
+    height: 200px;
+    margin-bottom: 40px;
+    border-radius: 16px;
+    overflow: hidden;
+    background: var(--accent);
+    border: 1px solid var(--gray-dark);
+}
+
+#visualizer {
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+
+.waveform-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at center, transparent 0%, rgba(0, 0, 0, 0.3) 100%);
+    pointer-events: none;
+}
+
+/* ============================================
+   Información del beat
+   ============================================ */
+
+.beat-info {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.beat-title {
+    font-size: 24px;
+    font-weight: 300;
+    margin-bottom: 8px;
+    letter-spacing: 1px;
+}
+
+.beat-meta {
+    font-size: 13px;
+    color: var(--gray-light);
+    font-weight: 300;
+    letter-spacing: 0.5px;
+}
+
+/* ============================================
+   Controles de reproducción
+   ============================================ */
+
+.player-controls {
+    margin-bottom: 40px;
+}
+
+.progress-bar-wrapper {
+    margin-bottom: 24px;
+}
+
+.progress-bar {
+    width: 100%;
+    height: 4px;
+    background: var(--gray-dark);
+    border-radius: 2px;
+    position: relative;
+    cursor: pointer;
+    margin-bottom: 12px;
+}
+
+.progress-fill {
+    height: 100%;
+    background: var(--white);
+    border-radius: 2px;
+    width: 0%;
+    transition: width 0.1s linear;
+}
+
+.progress-handle {
+    position: absolute;
+    top: 50%;
+    left: 0%;
+    transform: translate(-50%, -50%);
+    width: 12px;
+    height: 12px;
+    background: var(--white);
+    border-radius: 50%;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.progress-bar:hover .progress-handle {
+    opacity: 1;
+}
+
+.time-display {
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+    color: var(--gray-light);
+    font-weight: 300;
+}
+
+/* ============================================
+   Botones de control
+   ============================================ */
+
+.control-buttons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 16px;
+}
+
+.control-btn {
+    width: 56px;
+    height: 56px;
+    background: var(--white);
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: var(--transition);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.control-btn svg {
+    width: 24px;
+    height: 24px;
+    fill: var(--black);
+}
+
+.control-btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 8px 24px rgba(255, 255, 255, 0.2);
+}
+
+.control-btn:active {
+    transform: scale(0.95);
+}
+
+.control-btn.secondary {
+    width: 44px;
+    height: 44px;
+    background: var(--accent);
+    border: 1px solid var(--gray-dark);
+}
+
+.control-btn.secondary svg {
+    width: 20px;
+    height: 20px;
+    fill: var(--white);
+}
+
+.control-btn.secondary:hover {
+    background: rgba(255, 255, 255, 0.08);
+}
+
+.play-icon,
+.pause-icon {
+    transition: opacity 0.2s ease;
+}
+
+.hidden {
+    display: none !important;
+}
+
+/* ============================================
+   Botón nuevo beat
+   ============================================ */
+
+.new-beat-btn {
+    width: 100%;
+    padding: 18px;
+    background: transparent;
+    border: 1px solid var(--gray-dark);
+    border-radius: 12px;
+    color: var(--gray-light);
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 300;
+    letter-spacing: 0.5px;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.new-beat-btn:hover {
+    border-color: rgba(255, 255, 255, 0.3);
+    background: var(--accent);
+    color: var(--white);
+}
+
+/* ============================================
+   Footer
+   ============================================ */
+
+.footer {
+    margin-top: auto;
+    padding-top: 60px;
+    text-align: center;
+}
+
+.footer p {
+    font-size: 11px;
+    color: rgba(255, 255, 255, 0.3);
+    font-weight: 300;
+    letter-spacing: 1px;
+}
+
+/* ============================================
+   Animaciones
+   ============================================ */
+
+@keyframes fadeInDown {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes spin {
+    to {
+        transform: translate(-50%, -50%) rotate(360deg);
+    }
+}
+
+/* ============================================
+   Responsive
+   ============================================ */
+
+@media (max-width: 768px) {
+    .container {
+        padding: 40px 24px;
+    }
+
+    .logo {
+        font-size: 36px;
+        letter-spacing: 6px;
+    }
+
+    .tagline {
+        font-size: 12px;
+    }
+
+    .header {
+        margin-bottom: 60px;
+    }
+
+    .control-btn {
+        width: 48px;
+        height: 48px;
+    }
+
+    .control-btn svg {
+        width: 20px;
+        height: 20px;
+    }
+
+    .control-btn.secondary {
+        width: 40px;
+        height: 40px;
+    }
+}

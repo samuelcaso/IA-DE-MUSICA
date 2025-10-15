@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VULTSOUND</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Fondo con partículas sutiles -->
+    <canvas id="particleCanvas"></canvas>
+
+    <!-- Contenedor principal -->
+    <div class="container">
+        <!-- Logo y título -->
+        <header class="header">
+            <h1 class="logo">VULTSOUND</h1>
+            <p class="tagline">Professional AI Beat Generation</p>
+        </header>
+
+        <!-- Sección de entrada -->
+        <section class="input-section" id="inputSection">
+            <!-- Campo de prompt -->
+            <div class="input-group">
+                <label for="promptInput">Describe tu beat</label>
+                <textarea 
+                    id="promptInput" 
+                    placeholder="Ej: beat de trap etéreo con bajo profundo y texturas espaciales"
+                    rows="3"
+                ></textarea>
+            </div>
+
+            <!-- Subida de audio de referencia -->
+            <div class="input-group">
+                <label for="audioUpload">Audio de referencia (opcional)</label>
+                <div class="file-upload-wrapper">
+                    <input 
+                        type="file" 
+                        id="audioUpload" 
+                        accept="audio/*"
+                        hidden
+                    >
+                    <button class="file-upload-btn" id="uploadBtn">
+                        <span class="upload-icon">↑</span>
+                        <span id="fileName">Seleccionar archivo</span>
+                    </button>
+                </div>
+                <div class="audio-info" id="audioInfo"></div>
+            </div>
+
+            <!-- Botón de generación -->
+            <button class="generate-btn" id="generateBtn">
+                <span class="btn-text">Generar Beat</span>
+                <span class="btn-loader" id="btnLoader"></span>
+            </button>
+        </section>
+
+        <!-- Sección de reproducción -->
+        <section class="player-section hidden" id="playerSection">
+            <!-- Visualizador de audio -->
+            <div class="visualizer-wrapper">
+                <canvas id="visualizer"></canvas>
+                <div class="waveform-overlay"></div>
+            </div>
+
+            <!-- Información del beat -->
+            <div class="beat-info">
+                <h3 class="beat-title" id="beatTitle">Generando tu beat...</h3>
+                <p class="beat-meta" id="beatMeta">Analizando y componiendo</p>
+            </div>
+
+            <!-- Controles de reproducción -->
+            <div class="player-controls">
+                <!-- Barra de progreso -->
+                <div class="progress-bar-wrapper">
+                    <div class="progress-bar" id="progressBar">
+                        <div class="progress-fill" id="progressFill"></div>
+                        <div class="progress-handle" id="progressHandle"></div>
+                    </div>
+                    <div class="time-display">
+                        <span id="currentTime">0:00</span>
+                        <span id="totalTime">3:45</span>
+                    </div>
+                </div>
+
+                <!-- Botones de control -->
+                <div class="control-buttons">
+                    <button class="control-btn" id="playPauseBtn">
+                        <svg class="play-icon" viewBox="0 0 24 24">
+                            <path d="M8 5v14l11-7z"/>
+                        </svg>
+                        <svg class="pause-icon hidden" viewBox="0 0 24 24">
+                            <path d="M6 4h4v16H6V4zm8 0h4v16h-4V4z"/>
+                        </svg>
+                    </button>
+                    <button class="control-btn secondary" id="stopBtn">
+                        <svg viewBox="0 0 24 24">
+                            <path d="M6 6h12v12H6z"/>
+                        </svg>
+                    </button>
+                    <button class="control-btn secondary" id="downloadBtn">
+                        <svg viewBox="0 0 24 24">
+                            <path d="M19 12v7H5v-7H3v7c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2v-7h-2zm-6 .67l2.59-2.58L17 11.5l-5 5-5-5 1.41-1.41L11 12.67V3h2z"/>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Botón para crear nuevo beat -->
+            <button class="new-beat-btn" id="newBeatBtn">
+                Crear Nuevo Beat
+            </button>
+        </section>
+
+        <!-- Footer minimalista -->
+        <footer class="footer">
+            <p>Powered by AI · 2025</p>
+        </footer>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.8.49/Tone.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
